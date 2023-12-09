@@ -1,3 +1,11 @@
+/* gr: this doesnt work here */
+@font-face
+{
+	font-family: MonumentExtended-Black;
+	src: url('MonumentExtended-Black.ttf');
+}
+
+
 :xxxroot/*, .error-dialogue*/
 {
     display: flex;

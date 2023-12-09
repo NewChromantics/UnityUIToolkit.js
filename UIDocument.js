@@ -53,6 +53,16 @@ function UnityXmlToHtml(Xml)
 		//	-unity-background-image-tint-color
 		TagContent = TagContent.replaceAll('-unity-background-image-tint-color','--unity-background-image-tint-color');
 
+		
+		//	insert font
+		function GetFontCss(Name,Url)
+		{
+			return `font-family: ${Name};`;
+		}
+		TagContent = TagContent.replaceAll('-unity-font-definition: resource(&apos;Fonts/PPMonumentExtended-Black_old_kern SDF&apos;);', GetFontCss('MonumentExtended-Black','MonumentExtended-Black.ttf') );
+		TagContent = TagContent.replaceAll('-unity-font-definition: resource(&apos;Fonts/Poppins-Regular SDF&apos;);', GetFontCss('Poppins-Regular','Poppins-Regular.ttf') );
+		
+		
 		//	gr: special case?
 		if ( TagName == "Style" )
 		{
