@@ -42,6 +42,8 @@ export default class UILabel extends UIVisualElement
 	
 	connectedCallback()
 	{
+		super.connectedCallback();
+
 		this.innerText=  'label contents...';
 		//this.style.display = 'flex';	//	unity assumes this by default
 		

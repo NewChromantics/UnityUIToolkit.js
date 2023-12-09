@@ -12,8 +12,9 @@ export default class S5Button extends UIVisualElement
 	
 	connectedCallback()
 	{
+		super.connectedCallback();
+
 		this.innerText = 'S5 Button';
-		this.style.display = 'flex';	//	unity assumes this by default
 
 		//	refresh attributes
 		this.attributeChangedCallback();
