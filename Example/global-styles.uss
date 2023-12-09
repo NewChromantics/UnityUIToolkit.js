@@ -1,0 +1,43 @@
+Button
+{
+    margin: 0;
+    padding: 0;
+    border-color: transparent;
+    background-color: transparent;
+    opacity: 1;
+}
+
+Label,
+ui-label
+{
+    margin: 0;
+    padding: 0;
+}
+
+.s5-button
+ {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 20px 12px 20px;
+    background-color: rgb(242, 242, 242);
+    border-radius: 14px;
+}
+
+.s5-button__label,
+studio5ui-s5button .label
+{
+    -unity-font-style: bold;
+    font-size: 16px;
+}
+
+.s5-button__icon,
+studio5ui-s5button .icon
+{
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
+    -unity-background-image-tint-color: rgb(9, 9, 9);
+}

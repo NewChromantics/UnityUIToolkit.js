@@ -1,4 +1,37 @@
-export default class UILabel extends HTMLElement
+import UIVisualElement from './UIVisualElement.js'
+
+
+//	these classes are in UI builder, but not in the doc
+//	can't find any explanation, so in unity's default theme uss? (which is hidden)
+//	but viewing MatchingSelectors in UI builder maybe reveals them
+const unity_label_css = `
+	flex:		0 0 auto;
+	text-align:	center;
+	margin-top:	0;
+	padding-left:	1px;
+	padding-right:	2px;
+	white-space:	nowrap;
+`;
+const unity_label_css2 = `
+	flex:		0 0 auto;
+	margin:		4px 4px 2px 2px;
+	padding-left:	1px;
+	padding-top:	4px;
+	padding-right:	2px;
+	padding-bottom:	4px;
+	white-space:	nowrap;
+`;
+
+//	I think these are defaults in ui builder
+const Label_css = `
+	margin:		0;
+	padding:	0;
+
+	text-overflow:	clip;
+	text-wrap:	wrap;	/* "normal" in ui builder =... wrap? */
+`;
+
+export default class UILabel extends UIVisualElement
 {
 	constructor()
 	{
@@ -7,29 +40,20 @@ export default class UILabel extends HTMLElement
 		this.DomEvents = {};
 	}
 	
-	CreateStyle()
-	{
-		const Style = document.createElement('style');
-		Style.textContent = `:root { display:flex; }`;
-		this.Shadow.appendChild(Style);
-		//this.Style.textContent = Css ? `@import "${Css}";` : '';
-	}
-	
 	connectedCallback()
 	{
-		//	create a shadow dom
-		this.Shadow = this.attachShadow({mode: 'open'});
-		//	slot in the light dom (original inner html)
-		this.Shadow.innerHTML = '<slot></slot>';
-
-		const Label = document.createElement('label');
-		Label.style.background = 'blue';
-		Label.innerText = 'Label';
+		this.innerText=  'label contents...';
+		//this.style.display = 'flex';	//	unity assumes this by default
 		
-		this.Shadow.appendChild(Label);
-		this.CreateStyle();
-
+		//	.unity-label
+		//	.unity-text-element
+		//	gr: not sure what order these should be in
+		this.style.cssText += unity_label_css;
+		this.style.cssText += unity_label_css2;
+		this.style.cssText += Label_css;
+		
 		//	refresh attributes
+		this.attributeChangedCallback();
 		this.attributeChangedCallback('text',null,this.getAttribute('text'));
 	}
 	
@@ -42,7 +66,7 @@ export default class UILabel extends HTMLElement
 	{
 		if ( name == 'text' )
 		{
-			const Element = this.Shadow?.querySelector('label');
+			const Element = this;
 			if ( Element )
 				Element.innerText = newValue;
 		}

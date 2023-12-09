@@ -1,4 +1,5 @@
-:root {
+:xxxroot/*, .error-dialogue*/
+{
     display: flex;
     padding: 48px;
     flex-direction: column;
@@ -9,12 +10,15 @@
 }
 
 .error-dialogue {
+
     border-radius: 24px;
     border: 1px solid var(--white-white-25, rgba(242, 242, 242, 0.25));
     background: var(--black-black-100, rgb(9, 9, 9));
     background-color: rgb(0, 0, 0);
-    background-image: url('project://database/Assets/Packages/Ultimate%20Radial%20Menu/_Examples/Capsule%20Man%20Item%20Pickup/Sprites/BackgroundTiles.png?fileID=2800000&guid=a663df9c249c00d49aba7119e5823476&type=3#BackgroundTiles');
+    xxxbackground-image: url('project://database/Assets/Packages/Ultimate%20Radial%20Menu/_Examples/Capsule%20Man%20Item%20Pickup/Sprites/BackgroundTiles.png?fileID=2800000&guid=a663df9c249c00d49aba7119e5823476&type=3#BackgroundTiles');
+    background-image: url('BackgroundTiles.png');
     -unity-background-image-tint-color: rgb(0, 0, 0);
+    background-color: rgb(0, 0, 0,0.99) !important;
     border-top-width: 1px;
     border-right-width: 1px;
     border-bottom-width: 1px;

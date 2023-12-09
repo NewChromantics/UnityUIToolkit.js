@@ -1,3 +1,0 @@
-/*
-	API to use assets
-*/

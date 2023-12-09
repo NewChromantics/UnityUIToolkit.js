@@ -1,4 +1,6 @@
-export default class S5Button extends HTMLElement
+import UIVisualElement from './UIVisualElement.js'
+
+export default class S5Button extends UIVisualElement
 {
 	constructor()
 	{
@@ -7,31 +9,14 @@ export default class S5Button extends HTMLElement
 		this.DomEvents = {};
 	}
 	
-	CreateStyle()
-	{
-		const Style = document.createElement('style');
-		Style.textContent = `:root { display:flex; }`;
-		this.Shadow.appendChild(Style);
-		//this.Style.textContent = Css ? `@import "${Css}";` : '';
-	}
 	
 	connectedCallback()
 	{
-		//	create a shadow dom
-		this.Shadow = this.attachShadow({mode: 'open'});
-		//	slot in the light dom (original inner html)
-		this.Shadow.innerHTML = '<slot></slot>';
-		this.Shadow.style.display = 'flex';
-
-		const Button = document.createElement('button');
-		Button.innerText = 'S5 Button';
-		
-		this.Shadow.appendChild(Button);
-		this.CreateStyle();
-		
-		this.attributeChangedCallback();
+		this.innerText = 'S5 Button';
+		this.style.display = 'flex';	//	unity assumes this by default
 
 		//	refresh attributes
+		this.attributeChangedCallback();
 		this.attributeChangedCallback('label',null,this.getAttribute('label'));
 	}
 	
@@ -44,7 +29,7 @@ export default class S5Button extends HTMLElement
 	{
 		if ( name == 'label' )
 		{
-			const Element = this.Shadow?.querySelector('button');
+			const Element = this;
 			if ( Element )
 				Element.innerText = newValue;
 		}

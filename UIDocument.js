@@ -13,6 +13,7 @@
  <ui-document src="Welcome.uxml"></ui-document>
 */
 import VisualElement from './UIVisualElement.js'
+import UIRoot from './UIRoot.js'
 import Label from './UILabel.js'
 import S5Button from './S5Button.js'
 
@@ -35,11 +36,23 @@ function UnityXmlToHtml(Xml)
 	
 	function RewriteTag(Match,TagOpenClose,TagName,TagContent,TagClose)
 	{
+		const UrlReplacements = {};
+		UrlReplacements['project://database/Assets/UI/Pages/Error/ErrorPage.uss?fileID=7433441132597879392&amp;guid=694b211ecaec4bb4a89e3ed163f25ea9&amp;type=3#ErrorPage'] = 'ErrorPage.uss';
+		UrlReplacements['project://database/Assets/UI/global-styles.uss?fileID=7433441132597879392&amp;guid=5981b662a45d54dfe916ae1315e31e56&amp;type=3#global-styles'] = 'global-styles.uss';
+		UrlReplacements['project://database/Assets/Packages/Ultimate%20Radial%20Menu/Sprites/Circle/00_Circle_RadialMenu.png?fileID=2800000&amp;guid=5fd0c57811fc8b64693aa27a34963aed&amp;type=3#00_Circle_RadialMenu'] = '00_Circle_RadialMenu.png';
+		UrlReplacements['project://database/Assets/UI/Old/Icons/alert-triangle.png?fileID=2800000&amp;guid=6bca323b15f1cef4c8207e5d7d2941b8&amp;type=3#alert-triangle'] = 'alert-triangle.png';
+
+		for ( let MatchUrl of Object.keys(UrlReplacements) )
+		{
+			TagContent = TagContent.replace( MatchUrl, UrlReplacements[MatchUrl] );
+		}
+
 		//	gr: special case?
 		if ( TagName == "Style" )
 		{
-			TagContent = TagContent.replace('project://database/Assets/UI/Pages/Error/','');
-			return `<style ${TagContent}></style>`;
+			//return `<style ${TagContent}></style>`;
+			TagContent = TagContent.replace('src','href');
+			return `<link ${TagContent} rel="stylesheet" type="text/css"></link>`;
 		}
 		
 		//	https://dev.to/kamiquasi/painless-web-components-naming-is-not-too-hard-3lon#:~:text=No%20upper%2Dcase%20letters%20allowed,to%20be%20really%20let%20down)
@@ -64,6 +77,22 @@ function UnityXmlToHtml(Xml)
 			TagContent = TagContent.slice(0,-1);
 			TagClose = `/${TagClose}`;
 		}
+		
+		
+		//	if this is a custom unity element, we need to auto inject some classes
+		if ( TagName.includes('.') )
+		{
+			let [Namespace,Element] = TagName.split('.');
+			
+			//	gr: not 1:1 map... I think the c# component code might specify this?
+			if ( Element == 'S5Button' )
+				Element = 's5-button';
+			
+			//	inject class
+			const ClassTag = `class="${Element}"`;
+			TagContent = ` ${ClassTag} ${TagContent}`;
+		}
+		
 		
 		//	if this is a self closing tag, we need to re-write to not be self closing
 		//	.innerHTML doesn't accept self closing tags/>
