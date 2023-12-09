@@ -47,6 +47,12 @@ function UnityXmlToHtml(Xml)
 			TagContent = TagContent.replace( MatchUrl, UrlReplacements[MatchUrl] );
 		}
 
+		//	turn custom unity css properties into variables
+		//	so we can consume them with normal css
+		//	todo: explicitly look for style="" blocks
+		//	-unity-background-image-tint-color
+		TagContent = TagContent.replaceAll('-unity-background-image-tint-color','--unity-background-image-tint-color');
+
 		//	gr: special case?
 		if ( TagName == "Style" )
 		{
